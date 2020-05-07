@@ -27,22 +27,21 @@ export class Gene {
 // A gene sequence is represented internally as an 8-bit number.
 type Seq = number;
 
+const SEQ_UPPER = 'RRYYWWSS';
+
 function parseGeneString(gene_string: string): Seq {
-    const upper: string = 'RRYYWWSS';
     let seq: Seq = 0x00;
     for (let i = 0; i < 8; ++i) {
-        seq |= Number(gene_string[i] === upper[i]) << (7 - i);
+        seq |= Number(gene_string[i] === SEQ_UPPER[i]) << (7 - i);
     }
     return normalize(seq);
 }
 
-export
 function toGeneString(seq: Seq): string {
-    const upper: string = 'RRYYWWSS';
-    const lower: string = upper.toLowerCase();
+    const SEQ_LOWER: string = SEQ_UPPER.toLowerCase();
     let gene_string = '';
     for (let i = 0; i < 8; ++i) {
-        gene_string += (seq & (0x80 >> i)) ? upper[i] : lower[i];
+        gene_string += (seq & (0x80 >> i)) ? SEQ_UPPER[i] : SEQ_LOWER[i];
     }
     return gene_string;
 }
